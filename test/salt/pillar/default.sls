@@ -1,0 +1,141 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+snmp:
+  conf:
+    location: 'Right Here'
+    syscontact: 'System Admin'
+    logconnects: false
+    views:
+      - name: all
+        type: included
+        oid: '.1'
+        mask: 80
+    rocommunities:
+      public:
+        source:
+          - localhost
+          - 192.168.0.0/24
+          - 192.168.1.0/24
+    rwcommunities:
+      private:
+        source:
+          - 192.168.1.0/24
+    rousers:
+      - username: 'myv3user'
+        authpassphrase: 'myv3password'
+        view: all
+        authproto: 'SHA'
+        privproto: 'AES'
+        privpassphrase: 'v3privpass'
+# snmp:
+#   # lookup:
+#   #   snmpdargs: '-Lsd -Lf /dev/null -p /var/run/snmpd.pid -a'
+#   #   trapdargs: '-Lsd -p /var/run/snmptrapd.pid'
+#   #   trapdrun: 'no' # Needs "'", otherwise it'll be a bool
+#
+#   conf:
+#     location: 'Unknown (add saltstack pillar)'
+#     syscontact: 'Root <root@localhost> (add saltstack pillar)'
+#     logconnects: false
+#     # disk checks
+#     #disk: /
+#     #disks:
+#     #  - /
+#     # vacm com2sec's (map communities into security names)
+#     #com2sec:
+#     #  - name: local
+#     #    source: localhost
+#     #    community: localhost
+#     # vacm group's (map security names to group names)
+#     #groups:
+#     #  - name: ROgroup1
+#     #    version: usm
+#     #    secname: local
+#     #  - name: ROgroup1
+#     #    version: v1
+#     #    secname: local
+#     #  - name: ROgroup1
+#     #    version: v2c
+#     #    secname: local
+#     #  - name: Other
+#     #    version: usm
+#     #    secname: local
+#     #  - name: Other
+#     #    version: v1
+#     #    secname: local
+#     #  - name: Other
+#     #    version: v2c
+#     #    secname: local
+#     # vacm views (map mib trees to views)
+#     views:
+#       - name: all
+#         type: included
+#         oid: '.1'
+#         #optional mask
+#         mask: 80
+#     # vacm access (map groups to views with access restrictions)
+#     #access:
+#     #  - name: ROgroup1
+#     #    context: '""'
+#     #    match: any
+#     #    level: noauth
+#     #    prefix: exact
+#     #    read: all
+#     #    write: none
+#     #    notify: none
+#     #  - name: Other
+#     #    context: "cont"
+#     #    match: any
+#     #    level: noauth
+#     #    prefix: exact
+#     #    read: all
+#     #    write: none
+#     #    notify: none
+#     # v1/2c read-only communities
+#     rocommunities:
+#       public:
+#         source: [localhost, 192.168.0.0/24, 192.168.1.0/24]
+#       withoutsource:
+#     # or
+#     rocommunities:
+#       - public
+#     #rocommunities6:
+#     #  public:
+#     #    source: 2001:DB8::1
+#     # v1/2c read-write communities
+#     rwcommunities:
+#       private:
+#         source: 192.168.1.0/24
+#     # v3 users for read-only
+#     rousers:
+#       - username: 'myv3user'
+#         authpassphrase: 'myv3password'
+#         view: all
+#         # securitylevel: priv
+#         # authproto: 'SHA'
+#         # privproto: 'AES'
+#         # privpassphrase: 'v3privpass'
+#     # v3 users for read-write
+#     rwusers:
+#       - username: 'myv3user_rw'
+#         authpassphrase: 'myv3password'
+#         view: all
+#         # securitylevel: priv
+#         # authproto: 'SHA'
+#         # privproto: 'AES'
+#         # privpassphrase: 'v3privpass'
+#     # misc snmpd.conf settings
+#     settings:
+#       # agentAddress: 'udp:161,udp6:[::1]:161'
+#       sysServices: 72
+#       master: ['agentx']
+#     # custom MIB files
+#     # mibs:
+#     #     <MIB name>: salt://<path to MIB.txt>
+#     extend:
+#       - name: 'HTTPD_PIDS'
+#         prog: '/bin/sh /path/to/check_apache.sh'
+#     dlmod:
+#       - name: 'nstAgentPluginObject'
+#         sharedobject: '/path/to/nstAgentPluginObject.so'
